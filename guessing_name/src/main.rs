@@ -20,7 +20,7 @@ impl GuessResult {
 fn main() {
     println!("Welcome to Number Guessing Game!");
     play_game();
-\}
+}
 
 fn get_user_input() -> String {
     let mut input = String::new();
@@ -45,7 +45,7 @@ fn compare_number(guess: u32, secret_number: u32) -> GuessResult {
 }
 
 fn random_secret_number(from: u32, to: u32) -> u32 {
-    rand::thread_rng().gen_range(from..=to) as u32
+    rand::thread_rng().gen_range(from..=to)
 }
 
 fn play_game() -> u32 {
