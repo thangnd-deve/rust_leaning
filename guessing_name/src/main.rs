@@ -6,18 +6,6 @@ enum GuessResult {
     TooHigh,
     Correct,
 }
-fn main() {
-    println!("Welcome to Number Guessing Game!");
-    play_game();
-}
-
-fn get_user_input() -> String {
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Failed to read line");
-    input.trim().to_string()
-}
 
 impl GuessResult {
     fn message(&self) -> &'static str {
@@ -27,6 +15,19 @@ impl GuessResult {
             GuessResult::Correct => "Correct!",
         }
     }
+}
+
+fn main() {
+    println!("Welcome to Number Guessing Game!");
+    play_game();
+\}
+
+fn get_user_input() -> String {
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Failed to read line");
+    input.trim().to_string()
 }
 
 fn parse_guess(input: String) -> Option<u32> {
@@ -48,16 +49,15 @@ fn random_secret_number(from: u32, to: u32) -> u32 {
 }
 
 fn play_game() -> u32 {
-    // init game state
-    // randome secret number
+    // random secret number
     let from = 1;
     let to = 100;
     let secret_number = random_secret_number(from, to);
-    let mut attemps = 0;
+    let mut attempts = 0;
     println!("Guess the number ({}-{}):", from, to);
 
     loop {
-        attemps += 1;
+        attempts += 1;
         let input = get_user_input();
 
         match parse_guess(input) {
@@ -74,5 +74,5 @@ fn play_game() -> u32 {
         }
     }
     println!("Congratulations! You've guessed the number!");
-    attemps
+    attempts
 }
