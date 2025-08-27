@@ -1,0 +1,54 @@
+[package]
+name = "enhanced-todo-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# Async runtime
+tokio = { version = "1.0", features = ["full"] }
+
+# Database ORM
+sqlx = { version = "0.7", features = [
+    "runtime-tokio-rustls",
+    "postgres",
+    "chrono",
+    "uuid",
+    "migrate",
+] }
+
+# url for parse database url
+url = "2.4"
+
+# CLI framework
+clap = { version = "4.4", features = ["derive", "color"] }
+
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# Authentication & Security
+jsonwebtoken = "9.2"
+bcrypt = "0.15"
+
+# Error handling
+anyhow = "1.0"
+thiserror = "1.0"
+
+# Utilities
+uuid = { version = "1.0", features = ["v4", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+dotenv = "0.15"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Terminal UI
+console = "0.15"
+dialoguer = "0.11"
+tabled = "0.15"
+
+[dev-dependencies]
+# Testing
+tokio-test = "0.4"
+tempfile = "3.0"
