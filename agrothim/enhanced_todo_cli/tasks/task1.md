@@ -94,11 +94,11 @@ assert!(is_healthy);
 **Dependencies:** Task 1.3
 
 #### **Acceptance Criteria:**
-- [ ] Migration directory created
-- [ ] 001_initial_schema.sql with users & tasks tables
-- [ ] Migration runs successfully
-- [ ] Tables created with proper constraints
-- [ ] Indexes created for performance
+- [x] Migration directory created
+- [x] 001_initial_schema.sql with users & tasks tables
+- [x] Migration runs successfully
+- [x] Tables created with proper constraints
+- [x] Indexes created for performance
 
 #### **Schema Requirements:**
 ```sql
@@ -121,12 +121,12 @@ SELECT COUNT(*) FROM users;  # Should work (return 0)
 **Dependencies:** Task 1.4
 
 #### **Acceptance Criteria:**
-- [ ] User struct with all fields
-- [ ] Proper serde serialization/deserialization
-- [ ] Validation rules (email format, username length)
-- [ ] Password hashing functionality
-- [ ] CreateUserRequest & UpdateUserRequest DTOs
-- [ ] Unit tests for validation logic
+- [x] User struct with all fields
+- [x] Proper serde serialization/deserialization
+- [x] Validation rules (email format, username length)
+- [x] Password hashing functionality
+- [x] CreateUserRequest & UpdateUserRequest DTOs
+- [x] Unit tests for validation logic
 
 #### **Key Components:**
 ```rust
@@ -152,12 +152,12 @@ assert!(!user.verify_password("wrong"));
 **Dependencies:** Task 1.5
 
 #### **Acceptance Criteria:**
-- [ ] Task struct with all fields
-- [ ] TaskStatus and TaskPriority enums
-- [ ] Business logic methods (complete, is_overdue, etc.)
-- [ ] CreateTaskRequest & UpdateTaskRequest DTOs
-- [ ] Validation rules for all fields
-- [ ] Unit tests for business logic
+- [x] Task struct with all fields
+- [x] TaskStatus and TaskPriority enums
+- [x] Business logic methods (complete, is_overdue, etc.)
+- [x] CreateTaskRequest & UpdateTaskRequest DTOs
+- [x] Validation rules for all fields
+- [x] Unit tests for business logic
 
 #### **Business Rules:**
 ```rust

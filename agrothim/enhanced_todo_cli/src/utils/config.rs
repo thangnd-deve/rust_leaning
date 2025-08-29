@@ -4,11 +4,11 @@ use std::env;
 pub struct Config {
     pub database_url: String,
     pub jwt_secret: String,
-    pub log_level: String,
     pub environment: String,
 }
 
 impl Config {
+    #[allow(dead_code)]
     pub fn from_env() -> anyhow::Result<Self> {
         dotenv::dotenv().ok();
         let config = Config {
@@ -17,9 +17,6 @@ impl Config {
                 .to_string(),
             jwt_secret: env::var("JWT_SECRET")
                 .unwrap_or("secret".to_string())
-                .to_string(),
-            log_level: env::var("LOG_LEVEL")
-                .unwrap_or("info".to_string())
                 .to_string(),
             environment: env::var("APP_ENV")
                 .unwrap_or("development".to_string())
@@ -31,6 +28,7 @@ impl Config {
         Ok(config)
     }
 
+    #[allow(dead_code)]
     fn validate(&self) -> Result<(), anyhow::Error> {
         if self.database_url.is_empty() {
             return Err(anyhow::anyhow!("DATABASE_URL is not set"));
@@ -49,6 +47,7 @@ impl Config {
         Ok(())
     }
 
+    #[allow(dead_code)]
     pub fn is_production(&self) -> bool {
         self.environment == "production"
     }

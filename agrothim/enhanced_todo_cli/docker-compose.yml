@@ -3,6 +3,8 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: todo_postgres
+    expose:
+      - "5432:5432"
     environment:
       POSTGRES_DB: todo_cli
       POSTGRES_USER: todo_user
@@ -17,18 +19,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-
-  # Optional: Database admin UI
-  pgadmin:
-    image: dpage/pgadmin4:latest
-    container_name: todo_pgadmin
-    depends_on:
-      - postgres
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@todo.com
-      PGADMIN_DEFAULT_PASSWORD: admin123
-    ports:
-      - "8080:80"
 
 volumes:
   postgres_data:

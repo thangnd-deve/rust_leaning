@@ -1,5 +1,5 @@
-pub mod user_repo;
-pub mod task_repo;
+pub mod user_repository;
+pub mod task_repository;
 
-pub use user_repo::*;
-pub use task_repo::*;
+pub use user_repository::*;
+pub use task_repository::*;

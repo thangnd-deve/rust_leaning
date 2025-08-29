@@ -1,37 +1,50 @@
+mod models;
+mod database;
+mod services;
+mod cli;
+mod utils;
+mod api;
+
+use clap::Parser;
 use anyhow::Result;
-use enhanced_todo_cli::{database::Database, utils::Config};
+use tracing::{error, info};
+
+use cli::{Args, CliApp};
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    tracing_subscriber::fmt()
-        .with_env_filter(tracing_subscriber::EnvFilter::from_default_env())
-        .init();
+    let args = Args::parse();
 
-    tracing::info!("🦀 Enhanced Todo CLI starting...");
-
-    let config = Config::from_env().map_err(|e| {
-        tracing::error!("Failed to load configuration: {}", e);
-        e
-    })?;
-    tracing::info!(
-        "Configuration loaded for {} environment",
-        config.environment
-    );
-
-    let database = Database::from_url(&config.database_url).await?;
-
-    match database.health_check().await {
-        Ok(true) => tracing::info!("Database health check passed"),
-        Ok(false) => {
-            tracing::error!("Database health check failed. Please check your database connection.");
-            return Err(anyhow::anyhow!("Database health check failed"));
+    // Initialize the CLI application
+    match CliApp::new().await {
+        Ok(app) => {
+            info!("🦀 Enhanced Todo CLI started");
+            
+            // Run the CLI command
+            if let Err(e) = app.run(args).await {
+                error!("Application error: {}", e);
+                eprintln!("Error: {}", e);
+                std::process::exit(1);
+            }
         }
         Err(e) => {
-            tracing::error!("Failed to perform health check: {}", e);
-            return Err(e);
+            error!("Failed to initialize application: {}", e);
+            eprintln!("Failed to initialize application: {}", e);
+            
+            // Check if it's a database connection error
+            if e.to_string().contains("DATABASE_URL") {
+                eprintln!("\nPlease ensure:");
+                eprintln!("1. DATABASE_URL environment variable is set");
+                eprintln!("2. PostgreSQL database is running");
+                eprintln!("3. Database migrations have been applied");
+                eprintln!("\nExample:");
+                eprintln!("  export DATABASE_URL=\"postgres://username:password@localhost/todo_cli\"");
+                eprintln!("  sqlx migrate run");
+            }
+            
+            std::process::exit(1);
         }
     }
-    database.close().await?;
-    tracing::info!("🦀 Enhanced Todo CLI stopped");
+
     Ok(())
 }
